@@ -17,29 +17,53 @@ function keyDownHandler (e) {
     prevKey = currKey;
     if(e.key == "Right" || e.key == "ArrowRight") {
         currKey = "R";
-        initialX += dx;
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         currKey = "L";
-        initialX -= dx;
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
         currKey = "U";
-        initialY -= dy;
     }
     else if(e.key == "Down" || e.key == "ArrowDown") {
         currKey = "D";
-        initialY += dy;
     }
-    console.log(prevKey, currKey);
+    calculateNewPosition();
 }
 
 function initPosition () {
     for (var i=0; i<snakeLength; i++){
         pos.push({x : initialX + (i*unit), y: initialY})
     }
+
     finalX = pos[snakeLength - 1].x;
     finalY = pos[snakeLength - 1].y;
+}
+
+function calculateNewPosition () {
+    
+    var lastUnit = snakeLength - 1;
+
+    for (var i=0; i<snakeLength-1; i++) {
+        pos[i].x = pos[i+1].x;
+        pos[i].y = pos[i+1].y;
+    }
+
+    if (currKey == "R") {
+        pos[lastUnit].x += unit;
+    }
+
+    if (currKey == "L") {
+        pos[lastUnit].x -= unit;
+    }
+
+    if (currKey == "U") {
+        pos[lastUnit].y -= unit;
+    }
+
+    if (currKey == "D") {
+        pos[lastUnit].y += unit;
+    }
+
 }
 
 function drawSnake () {
