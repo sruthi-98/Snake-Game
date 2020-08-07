@@ -4,35 +4,48 @@ var ctx = canvas.getContext("2d");
 var snakeLength = 5;
 var initialX = canvas.width / 2;
 var initialY = canvas.height/2;
+var finalX, finalY;
 var unit = 10;
 var dx = 10;
 var dy = 10;
+var pos = [];
+var prevKey, currKey;
 
 document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler (e) {
+    prevKey = currKey;
     if(e.key == "Right" || e.key == "ArrowRight") {
-        console.log("right");
+        currKey = "R";
         initialX += dx;
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
-        console.log("left");
+        currKey = "L";
         initialX -= dx;
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
-        console.log("top");
+        currKey = "U";
         initialY -= dy;
     }
     else if(e.key == "Down" || e.key == "ArrowDown") {
-        console.log("down");
+        currKey = "D";
         initialY += dy;
     }
+    console.log(prevKey, currKey);
+}
+
+function initPosition () {
+    for (var i=0; i<snakeLength; i++){
+        pos.push({x : initialX + (i*unit), y: initialY})
+    }
+    finalX = pos[snakeLength - 1].x;
+    finalY = pos[snakeLength - 1].y;
 }
 
 function drawSnake () {
-    for(var i=0; i<snakeLength; i++) {
+    for (var i=0; i<snakeLength; i++) {
         ctx.beginPath();
-        ctx.rect(initialX + (i*unit), initialY, unit, unit);
+        ctx.rect(pos[i].x, pos[i].y, unit, unit);
         ctx.fillStyle = "red";
         ctx.fill();
         ctx.strokeStyle = "black";
@@ -47,4 +60,5 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
+initPosition();
 draw();
