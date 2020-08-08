@@ -128,7 +128,8 @@ function calculateNewPosition () {
     initialY = pos[0].y;
     finalX = pos[lastUnit].x;
     finalY = pos[lastUnit].y;
-    
+
+    console.log(pos);
 }
 
 
@@ -144,8 +145,21 @@ function drawSnake () {
     }
 }
 
+function collisionDetection () {
+    if(finalX >= canvas.width || finalX <= 0 || finalY <= 0 || finalY >= canvas.height) {
+        console.log("COLLISION");
+        initialX = canvas.width / 2;
+        initialY = canvas.height/2;
+        for (var i=0; i<snakeLength; i++){
+            pos[i].x = initialX + (i*unit);
+            pos[i].y = initialY;
+        }
+    }
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    collisionDetection();
     drawSnake();
     requestAnimationFrame(draw);
 }
