@@ -17,17 +17,20 @@ function keyDownHandler (e) {
     prevKey = currKey;
     if(e.key == "Right" || e.key == "ArrowRight") {
         currKey = "R";
+        calculateNewPosition();
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
         currKey = "L";
+        calculateNewPosition();
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
         currKey = "U";
+        calculateNewPosition();
     }
     else if(e.key == "Down" || e.key == "ArrowDown") {
         currKey = "D";
+        calculateNewPosition();
     }
-    calculateNewPosition();
 }
 
 function initPosition () {
@@ -39,32 +42,95 @@ function initPosition () {
     finalY = pos[snakeLength - 1].y;
 }
 
-function calculateNewPosition () {
-    
-    var lastUnit = snakeLength - 1;
-
-    for (var i=0; i<snakeLength-1; i++) {
-        pos[i].x = pos[i+1].x;
-        pos[i].y = pos[i+1].y;
+function isHorizontal () {
+    var valueY = pos[0].y;
+    for (var i=1; i<snakeLength; i++) {
+        if(valueY != pos[i].y) {
+            return false;
+        }
     }
-
-    if (currKey == "R") {
-        pos[lastUnit].x += unit;
-    }
-
-    if (currKey == "L") {
-        pos[lastUnit].x -= unit;
-    }
-
-    if (currKey == "U") {
-        pos[lastUnit].y -= unit;
-    }
-
-    if (currKey == "D") {
-        pos[lastUnit].y += unit;
-    }
-
+    return true;
 }
+
+function isVertical () {
+    var valueX = pos[0].x;
+    for (var i=1; i<snakeLength; i++) {
+        if(valueX != pos[i].x) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function calculateNewPosition () { 
+
+    var lastUnit = snakeLength - 1;
+    var changedPosition = false;
+
+    if(isHorizontal()){
+        if (currKey == "R") {
+            for (var i=0; i<snakeLength; i++) {
+                pos[i].x += unit;
+                changedPosition = true;
+            }
+        }
+
+        if (currKey == "L") {
+            for (var i=0; i<snakeLength; i++) {
+                pos[i].x -= unit;
+                changedPosition = true;
+            }
+        }
+    }
+
+    if(isVertical()){
+        if (currKey == "D") {
+            for (var i=0; i<snakeLength; i++) {
+                pos[i].y += unit;
+                changedPosition = true;
+            }
+        }
+
+        if (currKey == "U") {
+            for (var i=0; i<snakeLength; i++) {
+                pos[i].y -= unit;
+                changedPosition = true;
+            }
+        }
+    }
+
+    if(!changedPosition) {
+        if (currKey != null) {
+            for (var i=0; i<snakeLength-1; i++) {
+                pos[i].x = pos[i+1].x;
+                pos[i].y = pos[i+1].y;
+            }
+        }
+    
+        if (currKey == "R") {
+            pos[lastUnit].x += unit;
+        }
+    
+        if (currKey == "L") {
+            pos[lastUnit].x -= unit;
+        }
+    
+        if (currKey == "U") {
+            pos[lastUnit].y -= unit;
+        }
+    
+        if (currKey == "D") {
+            pos[lastUnit].y += unit;
+        }
+    }
+
+    initialX = pos[0].x;
+    initialY = pos[0].y;
+    finalX = pos[lastUnit].x;
+    finalY = pos[lastUnit].y;
+    
+}
+
 
 function drawSnake () {
     for (var i=0; i<snakeLength; i++) {
