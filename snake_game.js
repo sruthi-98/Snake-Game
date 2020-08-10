@@ -10,8 +10,8 @@ var dx = 10;
 var dy = 10;
 var pos = [];
 var prevKey, currKey;
-var xPos = (Math.floor(Math.random() * canvas.width) % unit) * unit;
-var yPos = (Math.floor(Math.random() * canvas.height) % unit) * unit;
+var xPos = Math.floor(Math.random() * canvas.width) - unit;
+var yPos = Math.floor(Math.random() * canvas.height) - unit;
 
 document.addEventListener("keydown", keyDownHandler, false);
 
@@ -148,9 +148,9 @@ function drawSnake () {
 }
 
 function collisionDetection () {
-    if(finalX >= canvas.width || finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
+    if(finalX >= canvas.width || initialX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         console.log("COLLISION");
-        console.log(finalX, finalY);
+        console.log(finalX, finalY, initialX, initialY);
         initialX = canvas.width / 2;
         initialY = canvas.height/2;
         for (var i=0; i<snakeLength; i++){
