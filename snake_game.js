@@ -10,6 +10,8 @@ var dx = 10;
 var dy = 10;
 var pos = [];
 var prevKey, currKey;
+var xPos = (Math.floor(Math.random() * canvas.width) % unit) * unit;
+var yPos = (Math.floor(Math.random() * canvas.height) % unit) * unit;
 
 document.addEventListener("keydown", keyDownHandler, false);
 
@@ -129,7 +131,7 @@ function calculateNewPosition () {
     finalX = pos[lastUnit].x;
     finalY = pos[lastUnit].y;
 
-    console.log(pos);
+    //console.log(pos);
 }
 
 
@@ -146,8 +148,9 @@ function drawSnake () {
 }
 
 function collisionDetection () {
-    if(finalX >= canvas.width || finalX <= 0 || finalY <= 0 || finalY >= canvas.height) {
+    if(finalX >= canvas.width || finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         console.log("COLLISION");
+        console.log(finalX, finalY);
         initialX = canvas.width / 2;
         initialY = canvas.height/2;
         for (var i=0; i<snakeLength; i++){
@@ -157,12 +160,38 @@ function collisionDetection () {
     }
 }
 
+// function drawSnack () {
+//     ctx.beginPath();
+//     ctx.rect(xPos, yPos, unit, unit);
+//     ctx.fillStyle = "black";
+//     ctx.fill();
+//     ctx.strokeStyle = "black";
+//     ctx.stroke();
+//     ctx.closePath();
+//     //console.log(xPos, yPos);
+// }
+
+// function eatSnack () {
+//     if(finalX + unit <= xPos || finalY + unit <=yPos) {
+//         ctx.beginPath();
+//         ctx.rect(xPos, yPos, unit, unit);
+//         ctx.fillStyle = "#bab3b3";
+//         ctx.fill();
+//         ctx.strokeStyle = "#bab3b3";
+//         ctx.stroke();
+//         ctx.closePath();
+//     }
+// }
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     collisionDetection();
     drawSnake();
-    requestAnimationFrame(draw);
+    //drawSnack();
+    //eatSnack();
+    calculateNewPosition();
+    //requestAnimationFrame(draw);
 }
 
 initPosition();
-draw();
+setInterval(draw, 150);
