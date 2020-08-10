@@ -18,19 +18,39 @@ document.addEventListener("keydown", keyDownHandler, false);
 function keyDownHandler (e) {
     prevKey = currKey;
     if(e.key == "Right" || e.key == "ArrowRight") {
-        currKey = "R";
+        if(prevKey == "L") {
+            currKey == "L";
+        }
+        else {
+            currKey = "R";
+        }
         calculateNewPosition();
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
-        currKey = "L";
+        if(prevKey == "R") {
+            currKey == "R";
+        }
+        else {
+            currKey = "L";
+        }
         calculateNewPosition();
     }
     else if(e.key == "Up" || e.key == "ArrowUp") {
-        currKey = "U";
+        if(prevKey == "D") {
+            currKey == "D";
+        }
+        else {
+            currKey = "U";
+        }
         calculateNewPosition();
     }
     else if(e.key == "Down" || e.key == "ArrowDown") {
-        currKey = "D";
+        if(prevKey == "U") {
+            currKey == "U";
+        }
+        else {
+            currKey = "D";
+        }
         calculateNewPosition();
     }
 }
@@ -44,86 +64,31 @@ function initPosition () {
     finalY = pos[snakeLength - 1].y;
 }
 
-function isHorizontal () {
-    var valueY = pos[0].y;
-    for (var i=1; i<snakeLength; i++) {
-        if(valueY != pos[i].y) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function isVertical () {
-    var valueX = pos[0].x;
-    for (var i=1; i<snakeLength; i++) {
-        if(valueX != pos[i].x) {
-            return false;
-        }
-    }
-    return true;
-}
-
 function calculateNewPosition () { 
 
     var lastUnit = snakeLength - 1;
-    var changedPosition = false;
 
-    if(isHorizontal()){
-        if (currKey == "R") {
-            for (var i=0; i<snakeLength; i++) {
-                pos[i].x += unit;
-                changedPosition = true;
-            }
-        }
-
-        if (currKey == "L") {
-            for (var i=0; i<snakeLength; i++) {
-                pos[i].x -= unit;
-                changedPosition = true;
-            }
+    if (currKey != null) {
+        for (var i=0; i<snakeLength-1; i++) {
+            pos[i].x = pos[i+1].x;
+            pos[i].y = pos[i+1].y;
         }
     }
 
-    if(isVertical()){
-        if (currKey == "D") {
-            for (var i=0; i<snakeLength; i++) {
-                pos[i].y += unit;
-                changedPosition = true;
-            }
-        }
-
-        if (currKey == "U") {
-            for (var i=0; i<snakeLength; i++) {
-                pos[i].y -= unit;
-                changedPosition = true;
-            }
-        }
+    if (currKey == "R") {
+        pos[lastUnit].x += unit;
     }
 
-    if(!changedPosition) {
-        if (currKey != null) {
-            for (var i=0; i<snakeLength-1; i++) {
-                pos[i].x = pos[i+1].x;
-                pos[i].y = pos[i+1].y;
-            }
-        }
-    
-        if (currKey == "R") {
-            pos[lastUnit].x += unit;
-        }
-    
-        if (currKey == "L") {
-            pos[lastUnit].x -= unit;
-        }
-    
-        if (currKey == "U") {
-            pos[lastUnit].y -= unit;
-        }
-    
-        if (currKey == "D") {
-            pos[lastUnit].y += unit;
-        }
+    if (currKey == "L") {
+        pos[lastUnit].x -= unit;
+    }
+
+    if (currKey == "U") {
+        pos[lastUnit].y -= unit;
+    }
+
+    if (currKey == "D") {
+        pos[lastUnit].y += unit;
     }
 
     initialX = pos[0].x;
@@ -131,7 +96,7 @@ function calculateNewPosition () {
     finalX = pos[lastUnit].x;
     finalY = pos[lastUnit].y;
 
-    //console.log(pos);
+    // console.log(pos);
 }
 
 
@@ -148,9 +113,9 @@ function drawSnake () {
 }
 
 function collisionDetection () {
-    if(finalX >= canvas.width || initialX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
-        console.log("COLLISION");
-        console.log(finalX, finalY, initialX, initialY);
+    if(finalX >= canvas.width ||  finalX + unit <= 0 || initialX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
+        // console.log("COLLISION");
+        // console.log(finalX, finalY, initialX, initialY);
         initialX = canvas.width / 2;
         initialY = canvas.height/2;
         for (var i=0; i<snakeLength; i++){
