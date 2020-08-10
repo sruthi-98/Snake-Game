@@ -10,6 +10,8 @@ var dx = 10;
 var dy = 10;
 var pos = [];
 var prevKey, currKey;
+// var prevKey = "R";
+// var currKey = "R";
 var xPos = calculateRandomPosition(canvas.width);
 var yPos = calculateRandomPosition(canvas.height);
 
@@ -108,7 +110,6 @@ function calculateNewPosition () {
     finalX = pos[lastUnit].x;
     finalY = pos[lastUnit].y;
 
-    // console.log(pos);
 }
 
 /*
@@ -133,15 +134,13 @@ function drawSnake () {
 
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
-        // console.log("COLLISION");
-        // console.log(finalX, finalY, initialX, initialY);
         initialX = canvas.width / 2;
         initialY = canvas.height/2;
         for (var i=0; i<snakeLength; i++){
             pos[i].x = initialX + (i*unit);
             pos[i].y = initialY;
         }
-        prevKey = currKey = null;
+        prevKey = currKey = "R";
     }
 }
 
@@ -150,12 +149,12 @@ function collisionDetection () {
 */
 
 function calculateRandomPosition (limit) {
-    var pos = Math.floor(Math.random() * limit) - unit;
+    var pos = Math.floor(Math.random() * limit);
     var mod = pos % unit;
     if (mod != 0) {
         pos += (10 - mod);
     }
-    return pos;
+    return pos - unit;
 }
 
 /*
@@ -170,20 +169,21 @@ function drawSnack () {
     ctx.strokeStyle = "black";
     ctx.stroke();
     ctx.closePath();
-    console.log(xPos, yPos);
 }
 
-// function eatSnack () {
-//     if(finalX + unit <= xPos || finalY + unit <=yPos) {
-//         ctx.beginPath();
-//         ctx.rect(xPos, yPos, unit, unit);
-//         ctx.fillStyle = "#bab3b3";
-//         ctx.fill();
-//         ctx.strokeStyle = "#bab3b3";
-//         ctx.stroke();
-//         ctx.closePath();
-//     }
-// }
+/*
+    Eat snack function
+*/
+
+function eatSnack () {
+    if(finalX  == xPos && finalY == yPos) {
+        ctx.clearRect(xPos, yPos, unit + 1, unit + 1);
+        drawSnake();
+
+        xPos = calculateRandomPosition(canvas.width);
+        yPos = calculateRandomPosition(canvas.height);
+    }
+}
 
 /*
     Main function
@@ -194,9 +194,8 @@ function draw() {
     collisionDetection();
     drawSnake();
     drawSnack();
-    //eatSnack();
+    eatSnack();
     calculateNewPosition();
-    //requestAnimationFrame(draw);
 }
 
 initPosition();
