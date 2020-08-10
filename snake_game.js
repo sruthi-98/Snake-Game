@@ -10,10 +10,14 @@ var dx = 10;
 var dy = 10;
 var pos = [];
 var prevKey, currKey;
-var xPos = Math.floor(Math.random() * canvas.width) - unit;
-var yPos = Math.floor(Math.random() * canvas.height) - unit;
+var xPos = calculateRandomPosition(canvas.width);
+var yPos = calculateRandomPosition(canvas.height);
 
 document.addEventListener("keydown", keyDownHandler, false);
+
+/*
+    Key Handler for snake movement
+*/
 
 function keyDownHandler (e) {
     prevKey = currKey;
@@ -55,6 +59,10 @@ function keyDownHandler (e) {
     }
 }
 
+/*
+    Sets the initial position for snake
+*/
+
 function initPosition () {
     for (var i=0; i<snakeLength; i++){
         pos.push({x : initialX + (i*unit), y: initialY})
@@ -63,6 +71,10 @@ function initPosition () {
     finalX = pos[snakeLength - 1].x;
     finalY = pos[snakeLength - 1].y;
 }
+
+/*
+    Calculates new position of snake with key press
+*/
 
 function calculateNewPosition () { 
 
@@ -99,6 +111,9 @@ function calculateNewPosition () {
     // console.log(pos);
 }
 
+/*
+    Draw snake unit by unit
+*/
 
 function drawSnake () {
     for (var i=0; i<snakeLength; i++) {
@@ -112,8 +127,12 @@ function drawSnake () {
     }
 }
 
+/*
+    Checks if snake collides with the boundary
+*/
+
 function collisionDetection () {
-    if(finalX >= canvas.width ||  finalX + unit <= 0 || initialX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
+    if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         // console.log("COLLISION");
         // console.log(finalX, finalY, initialX, initialY);
         initialX = canvas.width / 2;
@@ -122,19 +141,37 @@ function collisionDetection () {
             pos[i].x = initialX + (i*unit);
             pos[i].y = initialY;
         }
+        prevKey = currKey = null;
     }
 }
 
-// function drawSnack () {
-//     ctx.beginPath();
-//     ctx.rect(xPos, yPos, unit, unit);
-//     ctx.fillStyle = "black";
-//     ctx.fill();
-//     ctx.strokeStyle = "black";
-//     ctx.stroke();
-//     ctx.closePath();
-//     //console.log(xPos, yPos);
-// }
+/*
+    Calculates random position for snack
+*/
+
+function calculateRandomPosition (limit) {
+    var pos = Math.floor(Math.random() * limit) - unit;
+    var mod = pos % unit;
+    if (mod != 0) {
+        pos += (10 - mod);
+    }
+    return pos;
+}
+
+/*
+    Draws snack for the snake
+*/
+
+function drawSnack () {
+    ctx.beginPath();
+    ctx.rect(xPos, yPos, unit, unit);
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    ctx.closePath();
+    console.log(xPos, yPos);
+}
 
 // function eatSnack () {
 //     if(finalX + unit <= xPos || finalY + unit <=yPos) {
@@ -148,11 +185,15 @@ function collisionDetection () {
 //     }
 // }
 
+/*
+    Main function
+*/
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     collisionDetection();
     drawSnake();
-    //drawSnack();
+    drawSnack();
     //eatSnack();
     calculateNewPosition();
     //requestAnimationFrame(draw);
