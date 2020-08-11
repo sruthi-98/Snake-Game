@@ -1,7 +1,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var snakeLength = 5;
+var snakeLength = 15;
 var initialX = canvas.width / 2;
 var initialY = canvas.height/2;
 var finalX, finalY;
@@ -133,18 +133,26 @@ function drawSnake () {
 }
 
 /*
+    Restart game function
+*/
+
+function restartGame () {
+    initialX = canvas.width / 2;
+    initialY = canvas.height/2;
+    for (var i=0; i<snakeLength; i++){
+        pos[i].x = initialX + (i*unit);
+        pos[i].y = initialY;
+    }
+    prevKey = currKey = "R";
+}
+
+/*
     Checks if snake collides with the boundary
 */
 
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
-        initialX = canvas.width / 2;
-        initialY = canvas.height/2;
-        for (var i=0; i<snakeLength; i++){
-            pos[i].x = initialX + (i*unit);
-            pos[i].y = initialY;
-        }
-        prevKey = currKey = "R";
+        restartGame();
     }
 }
 
@@ -228,6 +236,18 @@ function addNewUnit () {
 }
 
 /*
+    Check if snake collides with itself
+*/
+
+function selfCollisionDetection () {
+    for (var i=0; i<snakeLength-1; i++) {
+        if (finalX == pos[i].x && finalY == pos[i].y) {
+            restartGame();
+        }
+    }
+}
+
+/*
     Main function
 */
 
@@ -235,6 +255,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     collisionDetection();
     drawSnake();
+    selfCollisionDetection();
     drawSnack();
     eatSnack();
     calculateNewPosition();
