@@ -23,42 +23,46 @@ document.addEventListener("keydown", keyDownHandler, false);
 
 function keyDownHandler (e) {
     prevKey = currKey;
-    if(e.key == "Right" || e.key == "ArrowRight") {
-        if(prevKey == "L") {
-            currKey == "L";
+
+    if(!e.repeat) {
+        if(e.key == "Right" || e.key == "ArrowRight") {
+            if(prevKey == "L") {
+                currKey == "L";
+            }
+            else {
+                currKey = "R";
+            }
+            calculateNewPosition();
         }
-        else {
-            currKey = "R";
+        else if(e.key == "Left" || e.key == "ArrowLeft") {
+            if(prevKey == "R") {
+                currKey == "R";
+            }
+            else {
+                currKey = "L";
+            }
+            calculateNewPosition();
         }
-        calculateNewPosition();
+        else if(e.key == "Up" || e.key == "ArrowUp") {
+            if(prevKey == "D") {
+                currKey == "D";
+            }
+            else {
+                currKey = "U";
+            }
+            calculateNewPosition();
+        }
+        else if(e.key == "Down" || e.key == "ArrowDown") {
+            if(prevKey == "U") {
+                currKey == "U";
+            }
+            else {
+                currKey = "D";
+            }
+            calculateNewPosition();
+        }
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft") {
-        if(prevKey == "R") {
-            currKey == "R";
-        }
-        else {
-            currKey = "L";
-        }
-        calculateNewPosition();
-    }
-    else if(e.key == "Up" || e.key == "ArrowUp") {
-        if(prevKey == "D") {
-            currKey == "D";
-        }
-        else {
-            currKey = "U";
-        }
-        calculateNewPosition();
-    }
-    else if(e.key == "Down" || e.key == "ArrowDown") {
-        if(prevKey == "U") {
-            currKey == "U";
-        }
-        else {
-            currKey = "D";
-        }
-        calculateNewPosition();
-    }
+
 }
 
 /*
@@ -182,6 +186,44 @@ function eatSnack () {
 
         xPos = calculateRandomPosition(canvas.width);
         yPos = calculateRandomPosition(canvas.height);
+
+        addNewUnit();
+    }
+}
+
+/*
+    Increases the length of snake
+*/
+
+function addNewUnit () {
+    snakeLength += 1;
+
+    if (currKey == "R") {
+        pos.push({
+            x : finalX + unit,
+            y : finalY
+        });
+    }
+
+    if (currKey == "L") {
+        pos.push({
+            x : finalX - unit,
+            y : finalY
+        });
+    }
+
+    if (currKey == "U") {
+        pos.push({
+            x : finalX,
+            y : finalY - unit
+        });
+    }
+
+    if (currKey == "D") {
+        pos.push({
+            x : finalX,
+            y : finalY + unit
+        });
     }
 }
 
