@@ -14,6 +14,7 @@ var prevKey, currKey;
 // var currKey = "R";
 var xPos = calculateRandomPosition(canvas.width);
 var yPos = calculateRandomPosition(canvas.height);
+var score = 0;
 
 document.addEventListener("keydown", keyDownHandler, false);
 
@@ -189,6 +190,7 @@ function drawSnack () {
 
 function eatSnack () {
     if(finalX  == xPos && finalY == yPos) {
+        score += 1;
         ctx.clearRect(xPos, yPos, unit + 1, unit + 1);
         drawSnake();
 
@@ -248,6 +250,16 @@ function selfCollisionDetection () {
 }
 
 /*
+    Display score
+*/
+
+function drawScore () {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText("Score: " + score, 10, 20);
+}
+
+/*
     Main function
 */
 
@@ -258,6 +270,7 @@ function draw() {
     selfCollisionDetection();
     drawSnack();
     eatSnack();
+    drawScore();
     calculateNewPosition();
 }
 
