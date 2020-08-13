@@ -12,8 +12,7 @@ var pos = [];
 var prevKey, currKey;
 // var prevKey = "R";
 // var currKey = "R";
-var xPos = calculateRandomPosition(canvas.width);
-var yPos = calculateRandomPosition(canvas.height);
+var xPos, yPos;
 var score = 0;
 
 document.addEventListener("keydown", keyDownHandler, false);
@@ -157,6 +156,15 @@ function collisionDetection () {
     }
 }
 
+function ifSnackCollidesSnake () {
+    for (var i=0; i<snakeLength; i++) {
+        if(pos[i].x == xPos && pos[i].y == yPos) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /*
     Calculates random position for snack
 */
@@ -168,6 +176,17 @@ function calculateRandomPosition (limit) {
         pos += (10 - mod);
     }
     return pos - unit;
+}
+
+/*
+    Set position for snack
+*/
+
+function setSnackPosition () {
+    do {
+        xPos = calculateRandomPosition(canvas.width);
+        yPos = calculateRandomPosition(canvas.height);
+    } while (ifSnackCollidesSnake());
 }
 
 /*
@@ -189,14 +208,12 @@ function drawSnack () {
 */
 
 function eatSnack () {
-    if(finalX  == xPos && finalY == yPos) {
+    if(finalX == xPos && finalY == yPos) {
         score += 1;
         ctx.clearRect(xPos, yPos, unit + 1, unit + 1);
+
         drawSnake();
-
-        xPos = calculateRandomPosition(canvas.width);
-        yPos = calculateRandomPosition(canvas.height);
-
+        setSnackPosition();
         addNewUnit();
     }
 }
@@ -275,4 +292,5 @@ function draw() {
 }
 
 initPosition();
+setSnackPosition();
 setInterval(draw, 150);
