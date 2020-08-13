@@ -51,6 +51,17 @@ table {
 ==================================================================================================================
 */
 
-#myCanvas {
+body {
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#myCanvas, #score {
     background-color: #bab3b3;
+    padding: 10px;
+}
+
+#score {
+  max-height: 200px;
+  max-width: 720px;
 }

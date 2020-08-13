@@ -14,6 +14,7 @@ var prevKey, currKey;
 // var currKey = "R";
 var xPos, yPos;
 var score = 0;
+var scoreSection = document.getElementById("score");
 
 document.addEventListener("keydown", keyDownHandler, false);
 
@@ -271,9 +272,7 @@ function selfCollisionDetection () {
 */
 
 function drawScore () {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "black";
-    ctx.fillText("Score: " + score, 10, 20);
+    scoreSection.innerHTML = " Score : " + score;
 }
 
 /*
