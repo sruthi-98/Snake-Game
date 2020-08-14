@@ -125,10 +125,10 @@ function drawSnake () {
     for (var i=0; i<snakeLength; i++) {
         ctx.beginPath();
         ctx.rect(pos[i].x, pos[i].y, unit, unit);
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "white";
         ctx.fill();
-        ctx.strokeStyle = "black";
-        ctx.stroke();
+        // ctx.strokeStyle = "white";
+        // ctx.stroke();
         ctx.closePath();
     }
 }
@@ -176,7 +176,7 @@ function calculateRandomPosition (limit) {
     if (mod != 0) {
         pos += (10 - mod);
     }
-    return pos - unit;
+    return Math.max(0, pos - unit);
 }
 
 /*
@@ -197,10 +197,10 @@ function setSnackPosition () {
 function drawSnack () {
     ctx.beginPath();
     ctx.rect(xPos, yPos, unit, unit);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "red";
     ctx.fill();
-    ctx.strokeStyle = "black";
-    ctx.stroke();
+    // ctx.strokeStyle = "red";
+    // ctx.stroke();
     ctx.closePath();
 }
 
@@ -209,7 +209,7 @@ function drawSnack () {
 */
 
 function eatSnack () {
-    if(finalX == xPos && finalY == yPos) {
+    if(finalX == xPos && finalY == yPos || pos[snakeLength-2].x == xPos && pos[snakeLength-2].y == yPos) {
         score += 1;
         ctx.clearRect(xPos, yPos, unit + 1, unit + 1);
 
