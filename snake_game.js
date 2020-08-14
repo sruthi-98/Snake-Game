@@ -127,8 +127,6 @@ function drawSnake () {
         ctx.rect(pos[i].x, pos[i].y, unit, unit);
         ctx.fillStyle = "white";
         ctx.fill();
-        // ctx.strokeStyle = "white";
-        // ctx.stroke();
         ctx.closePath();
     }
 }
@@ -140,10 +138,10 @@ function drawSnake () {
 function restartGame () {
     initialX = canvas.width / 2;
     initialY = canvas.height/2;
-    for (var i=0; i<snakeLength; i++){
-        pos[i].x = initialX + (i*unit);
-        pos[i].y = initialY;
-    }
+    score = 0;
+    snakeLength = 15;
+    pos = [];
+    initPosition();
     prevKey = currKey = "R";
 }
 
@@ -153,6 +151,7 @@ function restartGame () {
 
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
+        alert("GAME OVER");
         restartGame();
     }
 }
@@ -262,6 +261,7 @@ function addNewUnit () {
 function selfCollisionDetection () {
     for (var i=0; i<snakeLength-1; i++) {
         if (finalX == pos[i].x && finalY == pos[i].y) {
+            alert("GAME OVER");
             restartGame();
         }
     }
