@@ -52,18 +52,21 @@ table {
 */
 
 body {
-  font-size: 18px;
+  font-size: 1.2rem;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
 }
 
-#myCanvas, #score {
+#myCanvas {
   background-color: rgba(0, 0, 0, 0.9);
+  width: 40%;
+  height: 40%;
 }
 
 #score {
-  min-height: 30px;
-  max-width: 700px;
-  padding: 15px 10px;
+  min-height: 6%;
+  max-width: 35%;
+  padding: 1% 2.5%;
   border-bottom: 1px solid white;
+  background-color: rgba(0, 0, 0, 0.9);
 }
