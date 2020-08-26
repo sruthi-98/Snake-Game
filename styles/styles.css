@@ -61,12 +61,25 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
   width: 40%;
   height: 40%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 #score {
-  min-height: 6%;
-  max-width: 35%;
+  height: 6%;
+  width: 35%;
   padding: 1% 2.5%;
   border-bottom: 1px solid white;
+  border-right: 1px solid black;
   background-color: rgba(0, 0, 0, 0.9);
 }
+
+#startGame {
+  position: absolute;
+  top: calc(40%/2 + 8%);
+  left: calc((40% - 8rem)/2);
+  width: 8rem;
+  height: 3rem;
+  text-transform: uppercase;
+}
+
