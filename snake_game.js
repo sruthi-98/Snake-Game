@@ -10,11 +10,14 @@ var dx = 10;
 var dy = 10;
 var pos = [];
 var prevKey, currKey;
-// var prevKey = "R";
-// var currKey = "R";
+prevKey = currKey = "R";
 var xPos, yPos;
 var score = 0;
 var scoreSection = document.getElementById("score");
+var optionSection = document.getElementById("options");
+var gameRunning = false;
+var restart = false;
+var interval;
 
 document.addEventListener("keydown", keyDownHandler, false);
 
@@ -26,6 +29,19 @@ function keyDownHandler (e) {
     prevKey = currKey;
 
     if(!e.repeat) {
+        if(e.key == "Escape") {
+            if(gameRunning){
+                document.getElementById("menu").style.display = "flex";
+                clearInterval(interval);
+                gameRunning = false;
+            }
+            else {
+                document.getElementById("menu").style.display = "none";
+                interval = setInterval(draw, 150);
+                gameRunning = true;
+            }
+        }
+
         if(e.key == "Right" || e.key == "ArrowRight") {
             if(prevKey == "L") {
                 currKey == "L";
@@ -135,15 +151,15 @@ function drawSnake () {
     Restart game function
 */
 
-function restartGame () {
-    initialX = canvas.width / 2;
-    initialY = canvas.height/2;
-    score = 0;
-    snakeLength = 15;
-    pos = [];
-    initPosition();
-    prevKey = currKey = "R";
-}
+// function restartGame () {
+//     initialX = canvas.width / 2;
+//     initialY = canvas.height/2;
+//     score = 0;
+//     snakeLength = 15;
+//     pos = [];
+//     initPosition();
+//     prevKey = currKey = "R";
+// }
 
 /*
     Checks if snake collides with the boundary
@@ -152,7 +168,8 @@ function restartGame () {
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         alert("GAME OVER");
-        restartGame();
+        location.reload();
+        //restartGame();
     }
 }
 
@@ -292,4 +309,17 @@ function draw() {
 
 initPosition();
 setSnackPosition();
-setInterval(draw, 150);
+drawSnack();
+drawSnake();
+drawScore();
+
+/*
+    Start Game function
+*/
+
+function startGame() {
+    gameRunning = true;
+    document.getElementById("menu").style.display = "none";
+    interval = setInterval(draw, 150);
+}
+
