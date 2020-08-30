@@ -1,7 +1,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var snakeLength = 15;
+var snakeLength = 5;
 var initialX = canvas.width / 2;
 var initialY = canvas.height/2;
 var finalX, finalY;
