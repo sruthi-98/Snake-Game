@@ -115,6 +115,10 @@ body {
   font-size: 1.25rem;
 }
 
+#startGame:hover {
+  background-color: rgb(80, 0, 0);
+}
+
 #pause {
   text-align: justify;
   justify-content: center;
