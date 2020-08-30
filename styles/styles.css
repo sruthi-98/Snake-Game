@@ -55,9 +55,10 @@ body {
   font-size: 1.2rem;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
-  width: 40%;
+  width: 45%;
   height: 40%;
   position: relative;
+  margin: 0 auto;
 }
 
 #myCanvas {
