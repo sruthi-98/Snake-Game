@@ -168,7 +168,7 @@ function drawSnake () {
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         alert("GAME OVER");
-        location.reload();
+        document.location.reload(true);
         //restartGame();
     }
 }
