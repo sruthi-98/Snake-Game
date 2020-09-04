@@ -148,28 +148,14 @@ function drawSnake () {
 }
 
 /*
-    Restart game function
-*/
-
-// function restartGame () {
-//     initialX = canvas.width / 2;
-//     initialY = canvas.height/2;
-//     score = 0;
-//     snakeLength = 15;
-//     pos = [];
-//     initPosition();
-//     prevKey = currKey = "R";
-// }
-
-/*
     Checks if snake collides with the boundary
 */
 
 function collisionDetection () {
     if(finalX >= canvas.width ||  finalX + unit <= 0 || finalY + unit <= 0 || finalY >= canvas.height) {
         alert("GAME OVER");
+        clearInterval(interval);
         document.location.reload(true);
-        //restartGame();
     }
 }
 
@@ -215,8 +201,6 @@ function drawSnack () {
     ctx.rect(xPos, yPos, unit, unit);
     ctx.fillStyle = "red";
     ctx.fill();
-    // ctx.strokeStyle = "red";
-    // ctx.stroke();
     ctx.closePath();
 }
 
